@@ -130,8 +130,8 @@ void CarregaValorImediato(int iPc, char cValue) {
 
 void SalvaPc(int iPc) {
     Memoria[iPc][0].n0 = (uiPc + 2 ) >> 12;
-    Memoria[iPc][0].n1 = (uiPc + 2 ) & 0x0F00;
-    Memoria[iPc][1].n0 = (uiPc + 2 ) & 0x00F0;
+    Memoria[iPc][0].n1 = ((uiPc + 2 ) & 0x0F00) >> 8;
+    Memoria[iPc][1].n0 = ((uiPc + 2 ) & 0x00F0) >> 4;
     Memoria[iPc][1].n1 = (uiPc + 2 ) & 0x000F;
     printf("\r\nVALOR CARREGADO %x%x%x%x", Memoria[iPc][0].n0, Memoria[iPc][0].n1,
             Memoria[iPc][1].n0, Memoria[iPc][1].n1);
@@ -201,7 +201,7 @@ int iProcessaEvento(int iEvento) {
         case MM:
             iAux = RetornaEndereco();
             CarregaValor(iAux >> 1);
-            printf("\r\nmoved to memory [%x] [%d]", uiPc, iAcumulador);
+            printf("\r\nmoved to memory [%x] [%d]", iAux, iAcumulador);
         break;
         case SC:
             //uiRa = uiPc + 2;
