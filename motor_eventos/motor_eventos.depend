@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1558536479 source:c:\users\mateusvendramini\projects\motor_eventos\motor_eventos\loader.c
+	<stdio.h>
+	"motor_eventos.h"
+	"loader.h"
+
+1558531462 c:\users\mateusvendramini\projects\motor_eventos\motor_eventos\motor_eventos.h
+
+1558527272 source:c:\users\mateusvendramini\projects\motor_eventos\motor_eventos\main.c
+	<stdio.h>
+	<stdlib.h>
+	"motor_eventos.h"
+
+1558533963 source:c:\users\mateusvendramini\projects\motor_eventos\motor_eventos\motor_eventos.c
+	<stdio.h>
+	"string.h"
+	"motor_eventos.h"
+	"loader.h"
+
+1558533976 c:\users\mateusvendramini\projects\motor_eventos\motor_eventos\loader.h
+
