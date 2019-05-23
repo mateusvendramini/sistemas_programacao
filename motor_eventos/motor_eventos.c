@@ -253,8 +253,8 @@ void ImprimeStatus() {
     printf("\r\n*************************************");
     printf("\r\nDigite qualquer tecla para continuar");
     printf("\r\nMEMORy\r\n");
-    DumpMemory();
-    getchar();
+    // DumpMemory();
+    // getchar();
 }
 
 void RunMVM()
