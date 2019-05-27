@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1558918498 source:c:\users\mateusvendramini\documents\motador_dois_passos\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
