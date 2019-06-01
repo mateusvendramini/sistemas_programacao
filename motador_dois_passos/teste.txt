@@ -1,4 +1,6 @@
-@ /0000
+; VAI MASSAIA
+ @ /0000
 carlos JP /010 ;pula para comeco do programa
        JZ /012 ;segundo comentario
-#
+       JP carlos ;
+ #

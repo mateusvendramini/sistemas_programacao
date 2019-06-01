@@ -20,14 +20,14 @@ typedef struct Mneumonico {
 }MNEUMONICO;
 
 typedef struct codigo {
-    unsigned char ucTamanho[2];
-    unsigned char ucEnderecoInicial[2];
+    unsigned char ucTamanho[4];
+    unsigned char ucEnderecoInicial[4];
     unsigned char vcCodigo[4048];
 } CODIGO;
 
 typedef union {
     CODIGO stCodObj;
-    unsigned char ucBytes[4052];
+    unsigned char ucBytes[4056];
 }CODIGOTOTAL;
 
 SIMBOLO vstTabelaSimbolos[512];
@@ -86,7 +86,7 @@ int iPasso;
 unsigned int iContador;
 int iUltimoMneumonicoInserido;
 CODIGOTOTAL stCodigo;
-
+//static int fIsFirstTime = TRUE;
 void LeLinha(char* pszLine) {
     char c;
     c = fgetc(fp);
@@ -239,6 +239,8 @@ int iProcessaEvento (int iEvento) {
                     iContador = asc2hex4bytes(strtok(NULL, " ;"));
                 else if (!strcmp(vstTabelaMneumonicos[iRet].szSimbolo, "K"))
                     iContador += 1;
+                else if (!strcmp(vstTabelaMneumonicos[iRet].szSimbolo, "#"))
+                    return END;
                 else {
                     printf("Erro na linha %d", iContador);
                     return ERRO;
@@ -329,8 +331,11 @@ int iProcessaEvento (int iEvento) {
             case PSEUDO:
                 if (!strcmp(vstTabelaMneumonicos[iRet].szSimbolo, "@")) {
                     iContador = asc2hex4bytes(strtok(NULL, " ;"));
-                    stCodigo.stCodObj.ucEnderecoInicial[0] = (iContador & 0xFF00) >> 2;
-                    stCodigo.stCodObj.ucEnderecoInicial[1] = (iContador & 0x00FF);
+                    stCodigo.stCodObj.ucEnderecoInicial[0] = hex2asc((iContador & 0xF000) >> 12);
+                    stCodigo.stCodObj.ucEnderecoInicial[1] = hex2asc((iContador & 0x0F00) >>  8);
+                    stCodigo.stCodObj.ucEnderecoInicial[2] = hex2asc((iContador & 0x00F0) >>  4);
+                    stCodigo.stCodObj.ucEnderecoInicial[3] = hex2asc((iContador & 0x000F));
+
                 }
                 else if (!strcmp(vstTabelaMneumonicos[iRet].szSimbolo, "K")) {
                     pszTok = strtok(NULL, " ;");
@@ -355,6 +360,17 @@ int iProcessaEvento (int iEvento) {
 
     }
     return OK;
+}
+static void SalvaCodigo() {
+    FILE *fpFinal = fopen("output.o", "w");
+    stCodigo.stCodObj.ucTamanho[0] = hex2asc((iContador & 0xF000) >> 12);
+    stCodigo.stCodObj.ucTamanho[1] = hex2asc((iContador & 0x0F00) >>  8);
+    stCodigo.stCodObj.ucTamanho[2] = hex2asc((iContador & 0x00F0) >>  4);
+    stCodigo.stCodObj.ucTamanho[3] = hex2asc((iContador & 0x000F) );
+    /*+4 do cabeçalho */
+    fwrite(stCodigo.ucBytes, sizeof(char), (iContador << 1) + 8, fpFinal);
+    fclose(fpFinal);
+
 }
 /* Toda linha precisa de operando */
 int main()
@@ -390,6 +406,7 @@ int main()
             printf("\r\nFINAL  do segundo passo");
             printf("\r\nPrimeiro passo ok");
             fclose(fp);
+            SalvaCodigo();
             break;
         }
         if (iRet == ERRO) {

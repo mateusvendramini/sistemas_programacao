@@ -1,0 +1,29 @@
+ @ /0000
+ J start ;pula para 0x10
+ K /00 ;
+ K /01 ;@ 0x02
+V1 K /00 ;
+ K /02 ;@ 0x04
+V2 K /00
+V3 K /00 ;0x06
+ K /00 ;
+S1 K /00 ;0x08
+ K /00 ;
+ K /00 ;0x0A
+ K /00 ;
+ K /00 ;0x0C
+ K /00 ;
+ K /00 ;0x0D
+start + V1
+ - V2
+ * V2
+ LD V2
+ MM S1
+ SC carlos
+ HM /000
+carlos K /00
+       K /00
+ LV /007
+ PD /000
+ RS carlos
+ #
