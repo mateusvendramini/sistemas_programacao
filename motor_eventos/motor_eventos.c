@@ -218,6 +218,7 @@ int iProcessaEvento(int iEvento) {
             iAux = RetornaEndereco();
             uiPc = iMontaValor(iAux >> 1);
             printf("\r\nreturned from subroutine %x", uiPc);
+            return MVN_OK;
             //printf("\r\nChamada de IO");
         break;
         case HM:
@@ -253,8 +254,9 @@ void ImprimeStatus() {
     printf("\r\n*************************************");
     printf("\r\nDigite qualquer tecla para continuar");
     printf("\r\nMEMORy\r\n");
-    // DumpMemory();
-    // getchar();
+    DumpMemory();
+    printf("\r\n**************End*****************");
+    getchar();
 }
 
 void RunMVM()
@@ -272,7 +274,7 @@ void RunMVM()
             ImprimeStatus();
             return;
         }
-        ImprimeStatus();
+        //ImprimeStatus();
     }
 
     return;

@@ -91,6 +91,7 @@ void LeLinha(char* pszLine) {
     char c;
     c = fgetc(fp);
     while (c != '\0' && c != '\n') {
+        //printf("%c", c);
         *pszLine = c;
         pszLine++;
         c = fgetc(fp);
@@ -404,9 +405,10 @@ int main()
         iRet = iProcessaEvento(iEvento);
         if (iRet == END) {
             printf("\r\nFINAL  do segundo passo");
-            printf("\r\nPrimeiro passo ok");
+            printf("\r\nFinal da execucao");
             fclose(fp);
             SalvaCodigo();
+            getchar();
             break;
         }
         if (iRet == ERRO) {
